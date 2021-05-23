@@ -5,18 +5,17 @@ const fs = require('fs');
 // create client
 const client = new Discord.Client();
 
-// new collection
+// create collection
 client.commands = new Discord.Collection();
 
 // require config
 const config = require('./config.json');
-const { token } = config;
 
 // define prefix
 const prefix = "!";
 
 // login
-client.login(token);
+client.login(config.token)
 console.log('Logged in.');
 
 // when ready, run code
@@ -32,8 +31,6 @@ for (const folder of commandFolders) {
 	for (const file of commandFiles) {
 		const command = require(`./commands/${folder}/${file}`);
 		client.commands.set(command.name, command);
-
-console.log(`Command loaded: ${commandFiles}`);
 	}
 }
 
@@ -60,7 +57,7 @@ client.on('message', message => {
         client.commands.get(command).execute(Discord, message, args, client);
     } catch (error) {
         console.error(error);
-        message.reply('There was an error trying to execute that command!');
+        message.reply('there was an error trying to execute that command!');
     }
 });
 
